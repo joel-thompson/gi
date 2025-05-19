@@ -30,7 +30,7 @@ IMPORTANT:
 - ignore changes to lock files, node_modules, and other files that are not part of the project
 - the commit message should be in the present tense
 - use Conventional Commits
-	If a change is in a readme, it should be a docs change
+	IMPORTANT:If a change is in a readme, it should be a docs change
 		examples:
 		* feat: add new feature
 		* fix: fix bug
