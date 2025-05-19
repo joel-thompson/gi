@@ -27,7 +27,13 @@ export default function App({ commit = false, dryRun = false }: Props) {
 		if (commit) {
 			const fetchStatus = async () => {
 				const git = simpleGit();
-				const wholeRepoStatus = await git.diffSummary();
+				const wholeRepoStatus = await git.diff([
+					".",
+					":(exclude)pnpm-lock.yaml",
+					":(exclude)package-lock.json",
+					":(exclude)yarn.lock",
+					":(exclude)node_modules",
+				]);
 				// console.log("wholeRepoStatus", wholeRepoStatus);
 				const { text } = await generateText({
 					model: openai.responses("gpt-4o-mini"),
@@ -42,7 +48,9 @@ export default function App({ commit = false, dryRun = false }: Props) {
 
 				if (dryRun) {
 					console.log("Dry run, no changes will be made");
-					console.log("Commit message: ", text);
+					console.log("\n=== Git Diff ===\n");
+					console.log(wholeRepoStatus);
+					console.log("\n=== End Diff ===\n");
 				} else {
 					await git.add("./*").commit(text);
 				}

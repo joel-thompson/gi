@@ -19,6 +19,10 @@ const cli = meow(
 	{
 		importMeta: import.meta,
 		flags: {
+			dryRun: {
+				alias: "d",
+				type: "boolean",
+			},
 			commit: {
 				alias: "c",
 				type: "boolean",
@@ -27,4 +31,4 @@ const cli = meow(
 	}
 );
 
-render(<App commit={cli.flags.commit} />);
+render(<App commit={cli.flags.commit} dryRun={cli.flags.dryRun} />);
