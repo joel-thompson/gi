@@ -36,7 +36,7 @@ export default function App({ commit = false, dryRun = false }: Props) {
 				]);
 				// console.log("wholeRepoStatus", wholeRepoStatus);
 				const { text } = await generateText({
-					model: openai.responses("gpt-4o-mini"),
+					model: openai.responses("gpt-4.1-nano"),
 					system:
 						"You are an expert at generating commit messages. Please provide a commit message for the changes in the diff. It should be a single line of text, no more than 50 characters. IMPORTANT: ignore changes to lock files, node_modules, and other files that are not part of the project. IMPORTANT: the commit message should be in the present tense. IMPORTANT: use Conventional Commits, example: feat: add new feature, fix: fix bug, chore: update dependencies, refactor: refactor code, style: style changes, perf: performance improvements, test: add tests, docs: update documentation, build: update build files, ci: update CI files, revert: revert changes, merge: merge changes, chore: other changes that don't fit into the other categories.",
 					prompt: `
