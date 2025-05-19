@@ -2,7 +2,7 @@
 
 ## Install and Usage
 
-Right now it needs to be built and run locally. I plan to release it on npm soon.
+Right now it needs to be built and run locally. I plan to release it on npm soon. It uses an openai api key, and expects an env variable called GI_OPENAI_API_KEY to be set. I plan to add a config file soon.
 
 ```bash
 pnpm install
