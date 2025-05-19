@@ -63,6 +63,10 @@ export default function App({ commit = false, dryRun = false }: Props) {
 		}
 	}, [commit]);
 
+	if (!commit) {
+		return <Text>Must pass --commit flag to run the commit tool</Text>;
+	}
+
 	return (
 		<Text>
 			{aiResponse ? (
