@@ -71,7 +71,7 @@ export default function App({ commit = false, dryRun = false }: Props) {
 		<Text>
 			{aiResponse ? (
 				<Text>
-					Commit message: <Text color="green">{aiResponse}</Text>
+					message: <Text color="green">{aiResponse}</Text>
 				</Text>
 			) : (
 				<Text>
