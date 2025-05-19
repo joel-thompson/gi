@@ -40,7 +40,10 @@ export default function App({ commit = false, dryRun = false }: Props) {
 				});
 				setAIResponse(text);
 
-				if (!dryRun) {
+				if (dryRun) {
+					console.log("Dry run, no changes will be made");
+					console.log("Commit message: ", text);
+				} else {
 					await git.add("./*").commit(text);
 				}
 			};
