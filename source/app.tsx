@@ -6,6 +6,7 @@ import { simpleGit } from "simple-git";
 import { generateText } from "ai";
 import openai from "./ai/openai.js";
 import Spinner from "ink-spinner";
+import fs from "fs";
 
 type Props = {
 	commit: boolean | undefined;
@@ -51,13 +52,35 @@ export default function App({ commit = false, dryRun = false }: Props) {
 		if (commit) {
 			const fetchStatus = async () => {
 				const git = simpleGit();
-				const wholeRepoStatus = await git.diff([
+				const diff = await git.diff([
 					".",
 					":(exclude)pnpm-lock.yaml",
 					":(exclude)package-lock.json",
 					":(exclude)yarn.lock",
 					":(exclude)node_modules",
 				]);
+
+				// Get untracked files
+				const untracked = await git.raw([
+					"ls-files",
+					"--others",
+					"--exclude-standard",
+				]);
+
+				// For each untracked file, read its contents and format as a diff
+				const untrackedFiles = untracked.split("\n").filter(Boolean);
+				let untrackedDiff = "";
+				for (const file of untrackedFiles) {
+					const content = await fs.promises.readFile(file, "utf8");
+					untrackedDiff += `\n--- a/${file}\n+++ b/${file}\n`;
+					untrackedDiff += content
+						.split("\n")
+						.map((line) => `+${line}`)
+						.join("\n");
+				}
+
+				const wholeRepoStatus = diff + untrackedDiff;
+
 				if (wholeRepoStatus === "") {
 					setAIResponse("No changes to commit");
 					return;
