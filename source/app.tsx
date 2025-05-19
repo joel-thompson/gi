@@ -46,6 +46,8 @@ IMPORTANT:
 		* merge: merge changes
 		* chore: other changes that don't fit into the other categories`;
 
+const DIFF_SIZE_LIMIT = 5000; // e.g., 5000 characters
+
 export default function App({ commit = false, dryRun = false }: Props) {
 	const [aiResponse, setAIResponse] = useState<string | null>(null);
 	useEffect(() => {
@@ -83,6 +85,11 @@ export default function App({ commit = false, dryRun = false }: Props) {
 
 				if (wholeRepoStatus === "") {
 					setAIResponse("No changes to commit");
+					return;
+				}
+
+				if (wholeRepoStatus.length > DIFF_SIZE_LIMIT) {
+					setAIResponse("Diff too big to process.");
 					return;
 				}
 				// console.log("wholeRepoStatus", wholeRepoStatus);
