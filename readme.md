@@ -28,6 +28,11 @@ alias gi="node dist/cli.js -c" # commit changes with AI-generated message
 alias gid="node dist/cli.js -c -d" # dry run,shows what would be committed without making changes
 ```
 
+example usage:
+
+Here's a screenshot of the CLI in action:
+
+![alt text](images/screenshot.png)
 
 ## CLI
 

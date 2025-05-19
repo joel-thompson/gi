@@ -60,6 +60,14 @@ export default function App({ commit = false, dryRun = false }: Props) {
 					":(exclude)package-lock.json",
 					":(exclude)yarn.lock",
 					":(exclude)node_modules",
+					":(exclude)**/*.png",
+					":(exclude)**/*.jpg",
+					":(exclude)**/*.jpeg",
+					":(exclude)**/*.gif",
+					":(exclude)**/*.svg",
+					":(exclude)**/*.webp",
+					":(exclude)**/*.bmp",
+					":(exclude)**/*.ico",
 				]);
 
 				// Get untracked files
