@@ -66,7 +66,9 @@ export default function App({ commit = false, dryRun = false }: Props) {
 	return (
 		<Text>
 			{aiResponse ? (
-				<Text>Commit message: {aiResponse}</Text>
+				<Text>
+					Commit message: <Text color="green">{aiResponse}</Text>
+				</Text>
 			) : (
 				<Text>
 					<Spinner />
