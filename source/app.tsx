@@ -34,6 +34,10 @@ export default function App({ commit = false, dryRun = false }: Props) {
 					":(exclude)yarn.lock",
 					":(exclude)node_modules",
 				]);
+				if (wholeRepoStatus === "") {
+					setAIResponse("No changes to commit");
+					return;
+				}
 				// console.log("wholeRepoStatus", wholeRepoStatus);
 				const { text } = await generateText({
 					model: openai.responses("gpt-4.1-nano"),
