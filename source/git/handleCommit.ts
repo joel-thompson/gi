@@ -2,6 +2,7 @@ import { simpleGit } from "simple-git";
 import { generateText } from "ai";
 import openai from "../ai/openai.js";
 import fs from "fs";
+import { addAllAndCommit } from "./git.js";
 // import git from "./git.js";
 
 const gitSystemPrompt = `You are an expert at generating commit messages. 
@@ -31,11 +32,13 @@ IMPORTANT:
 const DIFF_SIZE_LIMIT = 5000;
 
 export async function handleCommit({
-	// dryRun,
+	dryRun,
 	verbose,
+	yesCommit,
 }: {
 	dryRun: boolean;
 	verbose: boolean;
+	yesCommit: boolean;
 }): Promise<string> {
 	const git = simpleGit();
 	const diff = await git.diff([
@@ -95,12 +98,16 @@ export async function handleCommit({
 		console.log("\n=== End Diff ===\n");
 	}
 
+	if (!yesCommit) {
+		return text;
+	}
+
 	// TODO: add a no confirm flag, which will run the add and commit logic if not dry run
-	// if (dryRun) {
-	// 	console.log("Dry run, no changes will be made");
-	// } else {
-	// 	 await git.add("./*").commit(text);
-	// }
+	if (dryRun) {
+		console.log("Dry run, no changes will be made");
+	} else {
+		await addAllAndCommit(text);
+	}
 
 	return text;
 

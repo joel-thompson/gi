@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, Box, useInput } from "ink";
+import { Text, Box, useInput, useApp } from "ink";
 
 interface ConfirmationProps {
 	message: string;
@@ -10,21 +10,23 @@ export default function Confirmation({
 	message,
 	onConfirm,
 }: ConfirmationProps) {
-	// const { exit } = useApp();
+	const { exit } = useApp();
 	const [answered, setAnswered] = useState(false);
 
 	useInput((input) => {
-		if (input.toLowerCase() === "y") {
-			setAnswered(true);
-			onConfirm();
-			// exit();
-			return;
-		}
+		if (answered) return;
 
-		if (input.toLowerCase() === "n") {
+		const key = input.toLowerCase();
+		if (key === "y" || key === "n") {
 			setAnswered(true);
-			// exit();
-			return;
+
+			if (key === "y") {
+				// Use setTimeout to ensure state update renders first
+				setTimeout(() => {
+					onConfirm();
+					exit();
+				}, 0);
+			}
 		}
 	});
 
