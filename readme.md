@@ -1,8 +1,8 @@
 # gi
 
-## Install and Usage
+## Install
 
-Right now it needs to be built and run locally. I plan to release it on npm soon. It uses an openai api key, and expects an env variable called GI_OPENAI_API_KEY to be set. I plan to add a config file soon.
+Right now it needs to be built and run locally. I plan to release it on npm soon. 
 
 ```bash
 pnpm install
@@ -28,9 +28,25 @@ alias gid="node dist/cli.js -c -d" # dry run,shows what would be committed witho
 
 example usage:
 
+
+## Setup
+
+It uses an openai api key, and expects a config file in ~/.gi.config.json.
+
+example config file:
+
+```json
+{
+  "openaiApiKey": "your key here"
+}
+```
+
+## Usage
+
 Here's a screenshot of the CLI in action:
 
 ![alt text](images/screenshot.png)
+
 
 ## CLI
 
