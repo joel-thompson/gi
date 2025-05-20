@@ -4,11 +4,10 @@ import { render } from "ink";
 import meow from "meow";
 import App from "./app.js";
 import { handleCommit } from "./git/handleCommit.js";
-// import Message from "./Message.js";
-import MySpinner from "./MySpinner.js";
+import MySpinner from "./components/MySpinner.js";
 import Confirmation from "./components/Confirmation.js";
 import { addAllAndCommit } from "./git/git.js";
-import Message from "./Message.js";
+import Message from "./components/Message.js";
 
 const cli = meow(
 	`

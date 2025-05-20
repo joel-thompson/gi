@@ -27,6 +27,11 @@ export default function Confirmation({
 					exit();
 				}, 0);
 			}
+			if (key === "n") {
+				setTimeout(() => {
+					exit();
+				}, 0);
+			}
 		}
 	});
 
