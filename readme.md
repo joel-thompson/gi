@@ -2,32 +2,21 @@
 
 ## Install
 
-Right now it needs to be built and run locally. I plan to release it on npm soon. 
+You can install `gi` globally from npm:
 
 ```bash
-pnpm install
+npm install -g @joelthompson/gi
 ```
 
-Then build and run locally:
+Or if you prefer using pnpm:
 
 ```bash
-pnpm build
+pnpm add -g @joelthompson/gi
 ```
 
-```bash
-# replace with the full path to dist/cli.js
-node dist/cli.js
-```
+After installation, the `gi` command will be available globally in your terminal.
 
-For now i'd recomend adding it as a bash alias:
-
-```bash
-alias gi="node dist/cli.js -c" # commit changes with AI-generated message
-alias gid="node dist/cli.js -c -d" # dry run,shows what would be committed without making changes
-```
-
-example usage:
-
+NOTE: i'm updating frequently, so you may need to run `pnpm update -g @joelthompson/gi` to get the latest version.
 
 ## Setup
 
