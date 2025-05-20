@@ -2,7 +2,7 @@ import { createOpenAI } from "@ai-sdk/openai";
 import fs from "fs";
 import untildify from "untildify";
 
-// Read OpenAI API key from ~/.gi.config
+// Read OpenAI API key from ~/.gi.config.json.
 function getOpenAIApiKey(): string {
 	const configPath = untildify("~/.gi.config.json");
 	if (!fs.existsSync(configPath)) {
