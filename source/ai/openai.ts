@@ -7,7 +7,7 @@ function getOpenAIApiKey(): string {
 	const configPath = untildify("~/.gi.config.json");
 	if (!fs.existsSync(configPath)) {
 		throw new Error(
-			`Config file not found at ${configPath}. Please create a .gi.config file in your home directory with your OpenAI API key.
+			`Config file not found at ${configPath}. Please create a .gi.config.json file in your home directory with your OpenAI API key.
 			
 			ex:
 			{
@@ -20,10 +20,10 @@ function getOpenAIApiKey(): string {
 	try {
 		config = JSON.parse(configRaw);
 	} catch (e) {
-		throw new Error(`Failed to parse .gi.config: ${e}`);
+		throw new Error(`Failed to parse .gi.config.json: ${e}`);
 	}
 	if (!config.openaiApiKey) {
-		throw new Error("Missing 'openaiApiKey' in .gi.config");
+		throw new Error("Missing 'openaiApiKey' in .gi.config.json");
 	}
 	return config.openaiApiKey;
 }
