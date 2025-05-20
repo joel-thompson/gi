@@ -2,6 +2,7 @@ import { simpleGit } from "simple-git";
 import { generateText } from "ai";
 import openai from "../ai/openai.js";
 import fs from "fs";
+// import git from "./git.js";
 
 const gitSystemPrompt = `You are an expert at generating commit messages. 
 Please provide a commit message for the changes in the diff. 
@@ -30,7 +31,7 @@ IMPORTANT:
 const DIFF_SIZE_LIMIT = 5000;
 
 export async function handleCommit({
-	dryRun,
+	// dryRun,
 	verbose,
 }: {
 	dryRun: boolean;
@@ -88,16 +89,20 @@ export async function handleCommit({
 		prompt: `Here is the diffs of the repository:\n${wholeRepoStatus}`,
 	});
 
-	if (dryRun) {
-		console.log("Dry run, no changes will be made");
-		if (verbose) {
-			console.log("\n=== Git Diff ===\n");
-			console.log(wholeRepoStatus);
-			console.log("\n=== End Diff ===\n");
-		}
-	} else {
-		await git.add("./*").commit(text);
+	if (verbose) {
+		console.log("\n=== Git Diff ===\n");
+		console.log(wholeRepoStatus);
+		console.log("\n=== End Diff ===\n");
 	}
 
+	// TODO: add a no confirm flag, which will run the add and commit logic if not dry run
+	// if (dryRun) {
+	// 	console.log("Dry run, no changes will be made");
+	// } else {
+	// 	 await git.add("./*").commit(text);
+	// }
+
 	return text;
+
+	// return { text, addAndCommit: () => git.add("./*").commit(text) };
 }
