@@ -32,9 +32,16 @@ example config file:
 
 ## Usage
 
-Here's a screenshot of the CLI in action:
+```bash
+# commit changes with AI-generated message
+$ gi -c
+message: docs: update README with CLI usage examples
+```
 
-![alt text](images/screenshot.png)
+```bash
+# dry run, shows what would be committed without making changes
+$ gi -c -d
+```
 
 
 ## CLI
