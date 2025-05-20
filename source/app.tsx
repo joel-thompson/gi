@@ -10,15 +10,6 @@ type Props = {
 	dryRun: boolean | undefined;
 };
 
-// const options: Partial<SimpleGitOptions> = {
-// 	baseDir: process.cwd(),
-// 	binary: "git",
-// 	maxConcurrentProcesses: 6,
-// 	trimmed: false,
-// };
-
-// when setting all options in a single object
-
 export default function App({ commit = false, dryRun = false }: Props) {
 	const [aiResponse, setAIResponse] = useState<string | null>(null);
 	const { exit } = useApp();

@@ -10,10 +10,32 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+	{
+		ignores: ["dist/**/*"],
+	},
+	{
+		files: ["**/*.ts", "**/*.tsx"],
+		languageOptions: {
+			parser: await import("@typescript-eslint/parser"),
+			parserOptions: {
+				ecmaVersion: "latest",
+				sourceType: "module",
+				ecmaFeatures: {
+					jsx: true,
+				},
+			},
+		},
+	},
 	...compat.extends(
+		"plugin:@typescript-eslint/recommended",
 		"plugin:react/recommended",
 		"plugin:react-hooks/recommended"
 	),
+	{
+		rules: {
+			"react-hooks/exhaustive-deps": "error",
+		},
+	},
 ];
 
 export default eslintConfig;
