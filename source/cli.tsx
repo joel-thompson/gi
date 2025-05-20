@@ -4,8 +4,8 @@ import { render } from "ink";
 import meow from "meow";
 import App from "./app.js";
 import { handleCommit } from "./git/handleCommit.js";
-import Spinner from "ink-spinner";
 import Message from "./Message.js";
+import MySpinner from "./MySpinner.js";
 
 const cli = meow(
 	`
@@ -41,7 +41,7 @@ const cli = meow(
 let message: string | null = null;
 
 if (cli.flags.commit) {
-	render(<Spinner />);
+	render(<MySpinner />);
 	message = await handleCommit({
 		dryRun: cli.flags.dryRun ?? false,
 		verbose: cli.flags.verbose ?? false,
