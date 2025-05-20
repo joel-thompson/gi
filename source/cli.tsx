@@ -55,7 +55,11 @@ if (cli.flags.commit) {
 		yesCommit: cli.flags.yesCommit ?? false,
 	});
 
-	if (cli.flags.yesCommit) {
+	if (
+		cli.flags.yesCommit ||
+		message === "No changes to commit" ||
+		message === "Diff too big to process."
+	) {
 		render(<Message message={message} />);
 	} else {
 		render(
