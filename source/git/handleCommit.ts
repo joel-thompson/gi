@@ -87,11 +87,7 @@ export async function handleCommit({
 	const { text } = await generateText({
 		model: openai.responses("gpt-4.1-nano"),
 		system: gitSystemPrompt,
-		prompt: `\n\t\tHere is the diffs of the repository:\n\t\t${JSON.stringify(
-			wholeRepoStatus,
-			null,
-			2
-		)}\n\t\t`,
+		prompt: `Here is the diffs of the repository:\n${wholeRepoStatus}`,
 	});
 	setAIResponse?.(text);
 
