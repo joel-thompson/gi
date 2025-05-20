@@ -31,6 +31,9 @@ IMPORTANT:
 
 const DIFF_SIZE_LIMIT = 5000;
 
+export const noDiffMessage = "No changes to commit";
+export const diffTooBigMessage = "Diff too big to process.";
+
 export async function handleCommit({
 	dryRun,
 	verbose,
@@ -79,11 +82,11 @@ export async function handleCommit({
 	const wholeRepoStatus = diff + untrackedDiff;
 
 	if (wholeRepoStatus === "") {
-		return "No changes to commit";
+		return noDiffMessage;
 	}
 
 	if (wholeRepoStatus.length > DIFF_SIZE_LIMIT) {
-		return "Diff too big to process.";
+		return diffTooBigMessage;
 	}
 
 	const { text } = await generateText({
@@ -102,7 +105,6 @@ export async function handleCommit({
 		return text;
 	}
 
-	// TODO: add a no confirm flag, which will run the add and commit logic if not dry run
 	if (dryRun) {
 		console.log("Dry run, no changes will be made");
 	} else {
@@ -110,6 +112,4 @@ export async function handleCommit({
 	}
 
 	return text;
-
-	// return { text, addAndCommit: () => git.add("./*").commit(text) };
 }

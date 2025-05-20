@@ -3,11 +3,7 @@ import React from "react";
 import { render } from "ink";
 import meow from "meow";
 import App from "./app.js";
-import { handleCommit } from "./git/handleCommit.js";
-import MySpinner from "./components/MySpinner.js";
-import Confirmation from "./components/Confirmation.js";
-import { addAllAndCommit } from "./git/git.js";
-import Message from "./components/Message.js";
+import commitMode from "./modes/commitMode.js";
 
 const cli = meow(
 	`
@@ -44,36 +40,12 @@ const cli = meow(
 	}
 );
 
-let message: string = "";
-
 if (cli.flags.commit) {
-	render(<MySpinner />);
-	message = await handleCommit({
+	await commitMode({
 		dryRun: cli.flags.dryRun ?? false,
 		verbose: cli.flags.verbose ?? false,
 		yesCommit: cli.flags.yesCommit ?? false,
 	});
-
-	if (
-		cli.flags.yesCommit ||
-		message === "No changes to commit" ||
-		message === "Diff too big to process."
-	) {
-		render(<Message message={message} />);
-	} else {
-		render(
-			<Confirmation
-				message={message}
-				onConfirm={async () => {
-					if (cli.flags.dryRun) {
-						console.log("Dry run, no changes will be made");
-					} else {
-						await addAllAndCommit(message);
-					}
-				}}
-			/>
-		);
-	}
 } else {
 	render(
 		<App
