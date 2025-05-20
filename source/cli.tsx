@@ -3,6 +3,9 @@ import React from "react";
 import { render } from "ink";
 import meow from "meow";
 import App from "./app.js";
+import { handleCommit } from "./git/handleCommit.js";
+import Spinner from "ink-spinner";
+import Message from "./Message.js";
 
 const cli = meow(
 	`
@@ -27,8 +30,31 @@ const cli = meow(
 				alias: "c",
 				type: "boolean",
 			},
+			verbose: {
+				alias: "v",
+				type: "boolean",
+			},
 		},
 	}
 );
 
-render(<App commit={cli.flags.commit} dryRun={cli.flags.dryRun} />);
+let message: string | null = null;
+
+if (cli.flags.commit) {
+	render(<Spinner />);
+	message = await handleCommit({
+		dryRun: cli.flags.dryRun ?? false,
+		verbose: cli.flags.verbose ?? false,
+	});
+	render(<Message message={message} />);
+} else {
+	render(
+		<App
+			flags={{
+				dryRun: cli.flags.dryRun,
+				commit: cli.flags.commit,
+				verbose: cli.flags.verbose,
+			}}
+		/>
+	);
+}

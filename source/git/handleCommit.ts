@@ -30,11 +30,11 @@ IMPORTANT:
 const DIFF_SIZE_LIMIT = 5000;
 
 export async function handleCommit({
-	setAIResponse,
 	dryRun,
+	verbose,
 }: {
-	setAIResponse?: (msg: string) => void;
-	dryRun?: boolean;
+	dryRun: boolean;
+	verbose: boolean;
 }): Promise<string> {
 	const git = simpleGit();
 	const diff = await git.diff([
@@ -75,12 +75,10 @@ export async function handleCommit({
 	const wholeRepoStatus = diff + untrackedDiff;
 
 	if (wholeRepoStatus === "") {
-		setAIResponse?.("No changes to commit");
 		return "No changes to commit";
 	}
 
 	if (wholeRepoStatus.length > DIFF_SIZE_LIMIT) {
-		setAIResponse?.("Diff too big to process.");
 		return "Diff too big to process.";
 	}
 
@@ -89,13 +87,14 @@ export async function handleCommit({
 		system: gitSystemPrompt,
 		prompt: `Here is the diffs of the repository:\n${wholeRepoStatus}`,
 	});
-	setAIResponse?.(text);
 
 	if (dryRun) {
 		console.log("Dry run, no changes will be made");
-		console.log("\n=== Git Diff ===\n");
-		console.log(wholeRepoStatus);
-		console.log("\n=== End Diff ===\n");
+		if (verbose) {
+			console.log("\n=== Git Diff ===\n");
+			console.log(wholeRepoStatus);
+			console.log("\n=== End Diff ===\n");
+		}
 	} else {
 		await git.add("./*").commit(text);
 	}
