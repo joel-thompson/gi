@@ -7,7 +7,12 @@ function getOpenAIApiKey(): string {
 	const configPath = untildify("~/.gi.config.json");
 	if (!fs.existsSync(configPath)) {
 		throw new Error(
-			`Config file not found at ${configPath}. Please create a .gi.config file in your home directory with your OpenAI API key.`
+			`Config file not found at ${configPath}. Please create a .gi.config file in your home directory with your OpenAI API key.
+			
+			ex:
+			{
+				"openaiApiKey": "sk-..."
+			}`
 		);
 	}
 	const configRaw = fs.readFileSync(configPath, "utf-8");
