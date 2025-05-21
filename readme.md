@@ -1,5 +1,7 @@
 # gi
 
+`gi` is a command-line tool that uses AI to generate meaningful commit messages for your git changes. It analyzes your diff, understands the changes made, and creates conventional commit messages that accurately describe your work. No more struggling with commit message wording or forgetting what changes you made!
+
 ## Install
 
 You can install `gi` globally from npm:
