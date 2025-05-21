@@ -53,6 +53,7 @@ if (cli.flags.commit) {
 				dryRun: cli.flags.dryRun,
 				commit: cli.flags.commit,
 				verbose: cli.flags.verbose,
+				yesCommit: cli.flags.yesCommit,
 			}}
 		/>
 	);

@@ -32,34 +32,79 @@ example config file:
 
 ## Usage
 
+**Important**: The `-c` (commit) flag is required to perform any actions. Running the tool without flags will show the help screen:
+
 ```bash
-# commit changes with AI-generated message
+# No flags passed
+$ gi
+Flags passed: {"dryRun":false,"commit":false,"verbose":false,"yesCommit":false}
+No action taken. Please use one of the following options:
+--commit (-c) Generate and apply an AI commit message
+--dry-run (-d) Show what would be committed without making changes
+--verbose (-v) Show detailed output including full diff
+--yesCommit (-y) Skip confirmation and commit directly
+
+
+# Generate an AI commit message and prompt for confirmation
 $ gi -c
-message: docs: update README with CLI usage examples
-```
+message: feat: add user authentication system
+Press Y to confirm or N to cancel
 
-```bash
-# dry run, shows what would be committed without making changes
+# Dry run - shows the AI-generated message without committing
 $ gi -c -d
+message: docs: update API documentation
+
+# Show verbose output including the full diff being analyzed
+$ gi -c -v
+message: feat: add new feature
+Press Y to confirm or N to cancel
+
+# Skip confirmation and commit directly with AI-generated message
+$ gi -c -y
+message: fix: resolve login issue
 ```
 
+I prefer to set an alias for my preffered way to run the tool.
+Example:
+```bash
+alias gii="gi -c -y"
+```
+
+The tool will:
+- Automatically exclude lock files (pnpm-lock.yaml, package-lock.json, yarn.lock)
+- Ignore node_modules and image files (png, jpg, jpeg, gif, svg, webp, bmp, ico)
+- Generate conventional commit messages (feat, fix, docs, etc.)
+- Handle both tracked and untracked files
+- Limit diff size to 5000 characters for optimal processing
+
+Special cases:
+- If there are no changes to commit, it will show "No changes to commit"
+- If the diff is too large (>5000 chars), it will show "Diff too big to process"
 
 ## CLI
 
 ```
-$ gi -c
+$ gi
 
   Usage
     $ gi [options]
 
   Options
-    -c, --commit    Add and commit changes with AI-generated message
-    -d, --dry-run   Show what would be committed without making changes
+    -c, --commit     Add and commit changes with AI-generated message
+    -d, --dry-run    Show what would be committed without making changes
+    -v, --verbose    Show detailed output including full diff
+    -y, --yesCommit  Skip confirmation and commit directly
 
   Examples
     $ gi -c
-    # Adds and commits changes with AI-generated message
+    # Generates commit message and prompts for confirmation
     
     $ gi -c -d
-    # Shows what would be committed without making changes
+    # Shows generated message without committing
+    
+    $ gi -c -v
+    # Shows full diff and generated message
+    
+    $ gi -c -y
+    # Commits changes immediately with AI message
 ```

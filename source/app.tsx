@@ -6,17 +6,21 @@ type Props = {
 		dryRun: boolean | undefined;
 		commit: boolean | undefined;
 		verbose: boolean | undefined;
+		yesCommit: boolean | undefined;
 	};
 };
 
 export default function App({ flags }: Props) {
 	return (
-		<Box flexDirection="column" gap={1} paddingBottom={1} paddingTop={1}>
+		<Box flexDirection="column" paddingBottom={1} paddingTop={1}>
 			<Text>Flags passed: {JSON.stringify(flags)}</Text>
+			<Text>No action taken. Please use one of the following options:</Text>
+			<Text>--commit (-c) Generate and apply an AI commit message</Text>
 			<Text>
-				No action taken. Please pass --commit to run the commit tool, optionally
-				--dry-run to see what would be done without actually committing.
+				--dry-run (-d) Show what would be committed without making changes
 			</Text>
+			<Text>--verbose (-v) Show detailed output including full diff</Text>
+			<Text>--yesCommit (-y) Skip confirmation and commit directly</Text>
 		</Box>
 	);
 }
