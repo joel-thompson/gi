@@ -7,7 +7,7 @@ import {
 import MySpinner from "../components/MySpinner.js";
 import Message from "../components/Message.js";
 import Confirmation from "../components/Confirmation.js";
-import { addAllAndCommit } from "../git/git.js";
+import { addAllAndCommitWithDryRun } from "../git/git.js";
 import React from "react";
 import clipboardy from "clipboardy";
 
@@ -23,26 +23,25 @@ export default async function commitMode({
 	let message: string = "";
 	render(<MySpinner />);
 	message = await handleCommit({
-		dryRun,
 		verbose,
-		yesCommit,
 	});
 
-	// copy message to clipboard
 	await clipboardy.write(`git commit -m "${message}"`);
 
-	if (yesCommit || message === noDiffMessage || message === diffTooBigMessage) {
+	if (message === noDiffMessage || message === diffTooBigMessage) {
+		render(<Message message={message} />);
+		return;
+	}
+
+	if (yesCommit) {
+		await addAllAndCommitWithDryRun({ message, dryRun });
 		render(<Message message={message} />);
 	} else {
 		render(
 			<Confirmation
 				message={message}
 				onConfirm={async () => {
-					if (dryRun) {
-						console.log("Dry run, no changes will be made");
-					} else {
-						await addAllAndCommit(message);
-					}
+					await addAllAndCommitWithDryRun({ message, dryRun });
 				}}
 			/>
 		);

@@ -2,8 +2,6 @@ import { simpleGit } from "simple-git";
 import { generateText } from "ai";
 import openai from "../ai/openai.js";
 import fs from "fs";
-import { addAllAndCommit } from "./git.js";
-// import git from "./git.js";
 
 const gitSystemPrompt = `You are an expert at generating commit messages. 
 Please provide a commit message for the changes in the diff. 
@@ -35,13 +33,9 @@ export const noDiffMessage = "No changes to commit";
 export const diffTooBigMessage = "Diff too big to process.";
 
 export async function handleCommit({
-	dryRun,
 	verbose,
-	yesCommit,
 }: {
-	dryRun: boolean;
 	verbose: boolean;
-	yesCommit: boolean;
 }): Promise<string> {
 	const git = simpleGit();
 	const diff = await git.diff([
@@ -99,16 +93,6 @@ export async function handleCommit({
 		console.log("\n=== Git Diff ===\n");
 		console.log(wholeRepoStatus);
 		console.log("\n=== End Diff ===\n");
-	}
-
-	if (!yesCommit) {
-		return text;
-	}
-
-	if (dryRun) {
-		console.log("Dry run, no changes will be made");
-	} else {
-		await addAllAndCommit(text);
 	}
 
 	return text;
