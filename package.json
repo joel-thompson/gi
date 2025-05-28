@@ -1,6 +1,6 @@
 {
 	"name": "@joelthompson/gi",
-	"version": "0.3.2",
+	"version": "0.3.3",
 	"license": "MIT",
 	"bin": "dist/cli.js",
 	"type": "module",
