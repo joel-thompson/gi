@@ -9,6 +9,7 @@ import Message from "../components/Message.js";
 import Confirmation from "../components/Confirmation.js";
 import { addAllAndCommit } from "../git/git.js";
 import React from "react";
+import clipboardy from "clipboardy";
 
 export default async function commitMode({
 	dryRun,
@@ -26,6 +27,9 @@ export default async function commitMode({
 		verbose,
 		yesCommit,
 	});
+
+	// copy message to clipboard
+	await clipboardy.write(`git commit -m "${message}"`);
 
 	if (yesCommit || message === noDiffMessage || message === diffTooBigMessage) {
 		render(<Message message={message} />);
